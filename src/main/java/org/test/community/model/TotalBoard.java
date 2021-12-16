@@ -11,7 +11,9 @@ import org.springframework.stereotype.Controller;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "total_board")
@@ -63,6 +65,7 @@ public class TotalBoard {
     private Category category;
 
 
-
+    @OneToMany(mappedBy="board")
+    private List<LikeTable> likes  = new ArrayList<>();
 
 }
