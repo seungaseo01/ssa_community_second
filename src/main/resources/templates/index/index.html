@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<h1>인덱스 페이지입니다</h1>
+
+<a th:href="@{/account/register}" sec:authorize="!isAuthenticated()">회원가입</a>
+<a th:href="@{/account/login}" sec:authorize="!isAuthenticated()">로그인</a>
+
+
+<span  sec:authorize="isAuthenticated()" sec:authentication="name">사용자</span>
+<span  sec:authorize="isAuthenticated()" sec:authentication="principal.authorities">권한</span>
+
+<a th:href="@{/logout}" sec:authorize="isAuthenticated()">로그아웃</a> 
+
+
+<br>
+
+<a th:href="@{/regCategoryForm}">카테고리 등록</a>
+<a th:href="@{/regBoardForm}">게시글 등록</a>
+<a th:href="@{/board/list}">전체 게시글 목록</a>
+
+
+
+</body>
+</html>

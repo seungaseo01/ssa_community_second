@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>[[${boardOne.bTitle}]]</title>
+
+    <!--css-->
+    <link rel="stylesheet" href="/css/board/selectByBNo.css">
+</head>
+<body>
+
+
+<div id="wrap">
+
+    <input type="hidden" value="[[${boardOne.bNo}]]">
+
+<!--    <div class="row">
+        <div>번호</div>
+        <div>[[${boardOne.bNo}]]</div>
+    </div>
+
+    <div class="row">
+        <div>작성자</div>
+        <div>[[${boardOne.bWriter}]]</div>
+    </div>
+-->
+
+    <div class="row board_title">
+
+            <div>[[${boardOne.bTitle}]]</div>
+
+            <div>[[${boardOne.bDivide}]]</div>
+<!--
+                <span th:if='${boardOne.bDivide == ""}'> </span>
+                <span th:if='${boardOne.bDivide != ""}'>[[${boardOne.bDivide}]]</span>
+                -->
+
+    </div>
+
+
+    <div class="row board_info">
+
+            <div>[[${boardOne.bWriter}]]</div>
+
+            <div>[[${boardOne.bRegdate}]]</div>
+
+            <div>[[${boardOne.bViewcnt}]]</div>
+
+            <div>[[${boardOne.bViewcnt}]]</div>
+
+    </div>
+
+
+    <div class="row board_content">
+        <!-- 이미지 및 파일 바꿔주기위한 과정 -->
+        <input type="hidden" name="testCon" id="testCon" th:value="${boardOne.bContent}">
+        <div id="innerCon"></div>
+    </div>
+
+
+    <div class="row">
+        <div><a th:href="@{/board/update?bNo=}+${boardOne.bNo}">수정하기</a></div>
+        <div><a th:href="@{/board/delete?bNo=}+${boardOne.bNo}">삭제하기</a></div>
+    </div>
+
+
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+</body>
+
+<script>
+
+    $(function(){
+        var test = $("#testCon").val();
+        $("#innerCon").html(test);
+
+    })
+
+</script>
+
+</html>

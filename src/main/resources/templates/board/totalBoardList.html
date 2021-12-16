@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>전체게시판 목록</title>
+</head>
+<body>
+
+<h1>전체게시판 출력111</h1>
+
+<table border="1">
+
+    <tr>
+        <td>번호</td>
+        <td>카테고리</td>
+        <td>제목</td>
+        <td>닉네임</td>
+        <td>작성일</td>
+        <td>조회</td>
+        <td>좋아요</td>
+    </tr>
+
+    <tr th:each="list:${list}">
+        <td th:text="${list.bNo}"></td>
+        <td th:text="${list.category.cName}"></td>
+        <td><a th:href="@{/board/select?bNo=}+${list.bNo}">[[${list.bTitle}]]</a></td>
+        <td th:text="${list.bWriter}"></td>
+        <td th:text="${list.bRegdate}"></td>
+        <td th:text="${list.bViewcnt}"></td>
+        <td th:text="${list.bViewcnt}"></td>
+    </tr>
+
+</table>
+
+<nav aria-label="Page navigation example">
+
+    <!-- 현재 페이지에서 그룹룹페이지 갯수 정 -->
+    <ul class="pagination"
+        th:with="start=${T(Math).floor(list.number/10)*10 + 1},
+                    last=(${start + 9 < list.totalPages ? start + 9 : list.totalPages})">
+
+        <!-- 첫 페이지 -->
+        <li class="page-item">
+            <a class="page-link" th:href="@{/board/list(page=1)}">First</a>
+        </li>
+
+        <!-- 이전 페이지 -->
+        <li class="page-item" th:class="${list.first} ? 'disabled'" >
+            <a class="page-link" th:href="${list.first} ? '#' :@{/board/list(page=${list.number})}">&lt;</a>
+        </li>
+
+        <!-- 현재 페이지 그룹의 페이지 나열 -->
+        <li class="page-item"th:each="page: ${#numbers.sequence(start, last)}" th:class="${page == list.number + 1} ? 'active'">
+            <a class="page-link" th:text="${page}" th:href="@{/board/list(page=${page})}"></a>
+        </li>
+
+        <!-- 다음 페이지 -->
+        <li class="page-item" th:class="${list.last} ? 'disabled'" >
+            <a class="page-link" th:href="${list.last} ? '#' :@{/board/list(page=${list.number + 2})}">&gt;</a>
+        </li>
+
+        <!-- 마지막 페이지 -->
+        <li class="page-item">
+            <a class="page-link" th:href="@{/board/list(page=${list.totalPages})}">Last</a>
+        </li>
+    </ul>
+</nav>
+
+
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+
+
+
+
+</body>
+</html>

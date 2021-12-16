@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>RegBoard</title>
+</head>
+<body>
+
+<h1>카테고리 생성 페이지</h1>
+
+<form action="/board/updateBoard" method="post">
+    카테고리 명 : <input type="text" name="category.cNo" th:value="${boardOne.category.cNo}">
+    분류 : <select name="bDivide">
+            <option></option>
+            <option>후기</option>
+            <option>추천</option>
+            <option>이슈</option>
+            </select>
+    제목 : <input type="text" name="bTitle" th:value="${boardOne.bTitle}">
+    작성자 : <input type="text" name="bWriter" th:value="${boardOne.bWriter}">
+    비밀글 : <input type="checkbox" name="bSecret" th:value="${boardOne.bSecret}">
+    내용 : <input type="text" name="bContent" th:value="${boardOne.bContent}">
+    <input type="submit" value="등록하기">
+</form>
+
+</body>
+</html>

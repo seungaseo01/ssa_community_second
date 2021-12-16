@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <meta charset="UTF-8">
+    <title>RegBoard</title>
+
+    <!-- include libraries(jQuery, bootstrap) -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+    <!--<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>-->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <!-- include summernote css/js -->
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+
+    <!--CSS-->
+    <link rel="stylesheet" href="/css/board/regBoardForm.css">
+
+</head>
+<body>
+
+<div id="table_wrap">
+    <div id="product">
+
+        <div class="row">
+            <div class="key_col">카테고리 명</div>
+            <div class="value_col ">
+                <select name="category.cNo"  class="board_input">
+                    <option th:each="c:${categoryList}" th:value="${c.cNo}">[[${c.cName}]]</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="key_col">분류</div>
+            <div class="value_col">
+                <select name="bDivide"  class="board_input">
+                    <option value="자유">자유</option>
+                    <option value="후기">후기</option>
+                    <option value="추천">추천</option>
+                    <option value="이슈">이슈</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="key_col">제목</div>
+            <div class="value_col"> <input type="text" name="bTitle" class="board_input"></div>
+        </div>
+
+        <div class="row">
+            <div class="key_col">작성자</div>
+            <div class="value_col" id="bWriter">
+            <span sec:authentication="name"></span></div>
+        </div>
+
+        <div class="row">
+            <div class="key_col">비밀글</div>
+            <div class="value_col"> <input type="checkbox" name="bSecret" value="1"  class="board_input"></div>
+        </div>
+
+        <div class="row">
+            <div id="summernote" name="bContent" class="board_input">게시판 설명을 간단하게 적어주세요.</div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3"><button type="button" class="btn btn-success btn-lg" id = "saveBtn">작성</button></div>
+        </div>
+
+
+
+    </div>
+</div>
+
+
+<!--ajax-->
+<!--<script src="static/js/common/ajax.js"></script>-->
+<script src="/js/board/regBoard.js"></script>
+
+
+</body>
+</html>
+
+
