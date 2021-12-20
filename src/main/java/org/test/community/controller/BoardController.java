@@ -8,18 +8,24 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.test.community.model.Category;
 import org.test.community.model.TotalBoard;
+import org.test.community.model.User;
 import org.test.community.repository.BoardRepository;
 import org.test.community.repository.CategoryRepository;
+import org.test.community.repository.LikesRepository;
+import org.test.community.repository.UserRepository;
+import org.test.community.service.LikesService;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.Principal;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
@@ -33,7 +39,16 @@ public class BoardController {
 
     @Autowired
     BoardRepository boardRepository;
+    
+    @Autowired
+    LikesService likesService;
 
+    @Autowired
+    UserRepository userRepository;
+    
+    @Autowired
+    LikesRepository likesRepository;
+    
 //    카테고리 생성
 
     @PostMapping("/regCategory")
@@ -118,6 +133,10 @@ public class BoardController {
 
         System.out.println("===============boardOne========"+boardOne);
         model.addAttribute("boardOne",boardOne.get());
+        
+        //좋아요 조회
+        int likes = likesRepository.selectLikes(bNo);
+        model.addAttribute("likes",likes);
 
         //Optional 에서 값을 빼올려면 get()써줘야함
         return "/board/selectByBNo";
@@ -162,7 +181,29 @@ public class BoardController {
         //Optional 에서 값을 빼올려면 get()써줘야함
         return "redirect:/board/list";
     }
+    
+    
 
+
+ // 좋아요
+     @PostMapping("/likes")
+     @ResponseBody
+     public int  pushLikes(int bNo,Principal principal){
+    	 
+    	 System.out.println("=============bNo================"+bNo);
+    	 String username = principal.getName();
+    	 
+
+    	 System.out.println("=============username================"+username);  	 
+    	 int id =  userRepository.selectId(username); 
+    	 System.out.println("=============id================"+id);
+  	 
+    	 likesService.pushLike(bNo, id);
+
+         return id;
+     }
+ 
+     
 
 
 }

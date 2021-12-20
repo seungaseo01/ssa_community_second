@@ -8,6 +8,7 @@
 
 <h1>전체게시판 출력111</h1>
 
+<!-- <div th:text="${list}"></div> -->
 <table border="1">
 
     <tr>
@@ -27,7 +28,8 @@
         <td th:text="${list.bWriter}"></td>
         <td th:text="${list.bRegdate}"></td>
         <td th:text="${list.bViewcnt}"></td>
-        <td th:text="${list.bViewcnt}"></td>
+        <td th:text="${list.likes.size}"></td>
+ 
     </tr>
 
 </table>
@@ -80,7 +82,7 @@
         integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
         crossorigin="anonymous"></script>
 
-
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 
 
 </body>

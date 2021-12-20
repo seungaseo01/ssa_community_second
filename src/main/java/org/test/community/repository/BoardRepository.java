@@ -18,5 +18,7 @@ public interface BoardRepository extends JpaRepository<TotalBoard,Integer> {
     @Modifying
     @Query("update TotalBoard set bViewcnt = bViewcnt + 1 where bNo = :bNo")
     int updateView(int bNo);
+    
+    
 	
 }

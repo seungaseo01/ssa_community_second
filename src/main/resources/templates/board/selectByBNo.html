@@ -12,41 +12,27 @@
 
 <div id="wrap">
 
-    <input type="hidden" value="[[${boardOne.bNo}]]">
-
-<!--    <div class="row">
-        <div>번호</div>
-        <div>[[${boardOne.bNo}]]</div>
-    </div>
-
-    <div class="row">
-        <div>작성자</div>
-        <div>[[${boardOne.bWriter}]]</div>
-    </div>
--->
+    <input type="hidden" th:value="${boardOne.bNo}" class="bNo">
 
     <div class="row board_title">
 
             <div>[[${boardOne.bTitle}]]</div>
 
             <div>[[${boardOne.bDivide}]]</div>
-<!--
-                <span th:if='${boardOne.bDivide == ""}'> </span>
-                <span th:if='${boardOne.bDivide != ""}'>[[${boardOne.bDivide}]]</span>
-                -->
+
 
     </div>
 
 
     <div class="row board_info">
 
-            <div>[[${boardOne.bWriter}]]</div>
+            <div> 작성자 : [[${boardOne.bWriter}]]</div>
 
-            <div>[[${boardOne.bRegdate}]]</div>
+            <div> 작성일 : [[${boardOne.bRegdate}]]</div>
 
-            <div>[[${boardOne.bViewcnt}]]</div>
+            <div> 조회수 : [[${boardOne.bViewcnt}]]</div>
 
-            <div>[[${boardOne.bViewcnt}]]</div>
+            <div> 좋아요 : [[${likes}]]</div>
 
     </div>
 
@@ -60,7 +46,8 @@
 
     <div class="row">
         <div><button id="likeBtn">좋아요</button></div>
-        <div><a th:href="@{/board/update?bNo=}+${boardOne.bNo}">수정하기</a></div>
+<!--         <div><button th:href="@{/board/update?bNo=}+${boardOne.bNo}">수정하기</button></div> -->
+        <div><button th:onclick="|location.href='/board/update?bNo=${boardOne.bNo}'|">수정하기</button></div>
         <div><a th:href="@{/board/delete?bNo=}+${boardOne.bNo}">삭제하기</a></div>
     </div>
 
