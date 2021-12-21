@@ -55,15 +55,48 @@
 </div>
 
 
+
+
+<!-- 댓글 -->
+
+<div id="table_wrap">
+    <div id="product">
+
+<!-- 댓글 작성 -->
+
+        <div class="row">
+            <div class="value_col" id="cmWriter"><span sec:authentication="name"></span></div>
+            <div class="value_col"><input type="text" name="cmContent" id="cmContent"></div>
+            <div class="col-md-3"><button type="button" class="btn btn-success btn-lg" id = "comment_save_btn">작성</button></div>
+        </div>
+
+<!-- 댓글 목록 -->
+		<div class="row">
+			<table>
+				<tr>
+				
+				</tr>			
+			</table>		
+		</div>
+
+
+
+
+    </div>
+</div>
+
+
+
+
+
+
+
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <script src="/js/board/selectByBNo.js"></script>
+<script src="/js/board/comment.js"></script>
 
 </body>
 
-<script>
 
-
-
-</script>
 
 </html>

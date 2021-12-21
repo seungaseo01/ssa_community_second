@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+
+
+<div id="table_wrap">
+    <div id="product">
+
+<!-- 댓글 작성 -->
+
+        <div class="row">
+            <div class="value_col" id="cmWriter"><span sec:authentication="name"></span></div>
+            <div class="value_col"><input type="text" name="bTitle" id="cmContent"></div>
+            <div class="col-md-3"><button type="button" class="btn btn-success btn-lg" id = "saveBtn">작성</button></div>
+        </div>
+
+<!-- 댓글 목록 -->
+		<div class="row">
+			<table>
+				<tr>
+				
+				</tr>			
+			</table>		
+		</div>
+
+
+
+
+    </div>
+</div>
+
+
+
+
+</body>
+</html>

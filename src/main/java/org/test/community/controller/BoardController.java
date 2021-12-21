@@ -116,7 +116,7 @@ public class BoardController {
 
         model.addAttribute("list", list);
 
-        return "/board/totalBoardList";
+        return "board/totalBoardList";
     }
 
 
@@ -139,7 +139,7 @@ public class BoardController {
         model.addAttribute("likes",likes);
 
         //Optional 에서 값을 빼올려면 get()써줘야함
-        return "/board/selectByBNo";
+        return "board/selectByBNo";
     }
 
 // 수정 페이지
@@ -153,7 +153,7 @@ public class BoardController {
         model.addAttribute("boardOne",boardOne.get());
 
         //Optional 에서 값을 빼올려면 get()써줘야함
-        return "/board/updateBoardForm";
+        return "board/updateBoardForm";
     }
 
 
@@ -171,7 +171,7 @@ public class BoardController {
     }
 
 
-    // 게시물 상세페이지
+// 게시물 삭제
     @GetMapping("/delete")
     public String boardDelete(@RequestParam("bNo") int bNo){
 
@@ -202,7 +202,10 @@ public class BoardController {
 
          return id;
      }
- 
+     
+     
+ //댓글
+
      
 
 
