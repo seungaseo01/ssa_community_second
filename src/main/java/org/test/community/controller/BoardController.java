@@ -131,12 +131,17 @@ public class BoardController {
         System.out.println("======================="+bNo);
         Optional<TotalBoard> boardOne = boardRepository.findById(bNo);
 
-        System.out.println("===============boardOne========"+boardOne);
+        System.out.println("===============boardOne========"+boardOne.get());
         model.addAttribute("boardOne",boardOne.get());
         
         //좋아요 조회
         int likes = likesRepository.selectLikes(bNo);
         model.addAttribute("likes",likes);
+        System.out.println("=======likes========"+ likes);
+        
+        //댓글 조회
+        
+        
 
         //Optional 에서 값을 빼올려면 get()써줘야함
         return "board/selectByBNo";

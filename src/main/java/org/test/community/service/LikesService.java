@@ -22,15 +22,13 @@ public class LikesService {
 	public void pushLike(int bNo, int id) {
 		
 		Optional<Integer> test =  Optional.ofNullable(likesRepository.checkLikes(bNo, id));
-		
-		
+			
 		if(test.isEmpty()) {
 			likesRepository.likes(bNo, id);	
 		}else { likesRepository.unlikes(bNo, id); }
 		 
 		System.out.println("like====================================="+test);
 		
-
 		
 	}
 

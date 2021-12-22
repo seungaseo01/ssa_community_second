@@ -45,10 +45,6 @@ public class TotalBoard {
     @Column(name = "b_writer")
     private String bWriter;
 
-	/*
-	 * @Column(name = "b_like",nullable = true) private int bLike;
-	 */
-
     @CreationTimestamp
     @Column(name = "b_regdate", updatable = false)
     private Timestamp bRegdate;

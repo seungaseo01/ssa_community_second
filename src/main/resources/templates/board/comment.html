@@ -1,28 +1,34 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
-<meta charset="EUC-KR">
+<meta charset="utf-8">
 <title>Insert title here</title>
 </head>
 <body>
 
 
-<div id="table_wrap">
+<div th:fragment="board-comment" id="table_wrap">
     <div id="product">
 
-<!-- ´ñ±Û ÀÛ¼º -->
+<!-- ëŒ“ê¸€ ìž‘ì„± -->
 
         <div class="row">
             <div class="value_col" id="cmWriter"><span sec:authentication="name"></span></div>
-            <div class="value_col"><input type="text" name="bTitle" id="cmContent"></div>
-            <div class="col-md-3"><button type="button" class="btn btn-success btn-lg" id = "saveBtn">ÀÛ¼º</button></div>
+            <div class="value_col"><input type="text" name="cmContent" id="cmContent"></div>
+            <div class="col-md-3"><button type="button" class="btn btn-success btn-lg" id = "comment_save_btn">ìž‘ì„±</button></div>
         </div>
 
-<!-- ´ñ±Û ¸ñ·Ï -->
+<!-- ëŒ“ê¸€ ëª©ë¡ -->
+
 		<div class="row">
-			<table>
-				<tr>
-				
+			<table border="1">
+				<tr th:each="comments:${boardOne.comments}">
+					<td th:text="${comments.user.username}"></td>
+					<td th:text="${comments.cmContent}"></td>
+					<td th:if="${comments.cmSeq == 1}"><button th:id="${comments.cmGrp}" class="add_btn"  th:value="${comments.cmNo}">ëŒ“ê¸€</button>
+<!-- 					<td th:if="${comments.cmSeq == 1}"><button th:id="${comments.cmGrp}" class="add_btn" th:value="${comments.cmNo}">ëŒ“ê¸€</button> -->
+					</td>				
+					<td th:if="${comments.cmSeq != 1}"><button id="add_btn" th:class="${comments.cmGrp}" th:value="${comments}">ëŒ“ê¸€</button></td>				
 				</tr>			
 			</table>		
 		</div>
@@ -32,6 +38,7 @@
 
     </div>
 </div>
+
 
 
 

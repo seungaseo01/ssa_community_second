@@ -26,7 +26,6 @@ import lombok.ToString;
 @Table(name = "comment")
 @Getter
 @Setter
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class Comment{
@@ -36,12 +35,12 @@ public class Comment{
 	 @GeneratedValue(strategy = GenerationType.IDENTITY)
 	 private int cmNo;
 	 
+	 @Column(name = "cm_grp")
+	 private int cmGrp;	 
 	 
 	 @Column(name = "cm_seq")
 	 private int cmSeq;
-	 
-	 @Column(name = "cm_lvl")
-	 private int cmLvl;
+
 	 
 	 @Column(name = "cm_content")
 	 private String cmContent;
