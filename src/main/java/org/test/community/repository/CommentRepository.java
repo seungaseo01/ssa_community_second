@@ -11,13 +11,18 @@ import org.test.community.model.Comment;
 @EnableJpaRepositories
 public interface CommentRepository  extends JpaRepository<Comment,Integer>{
 
-	@Query(value = "select c.cm_no, c.b_no , c.cm_seq, c.cm_grp , c.cm_content ,c.cm_writer,c.cm_regdate, u.username from comment c "
-			+ "join `user` u on c.cm_writer = u.id "
-			+ "where b_no = :bNo", nativeQuery = true)
+	@Query(value = "select * "
+			+ "from comment c join `user` u "
+			+ "on c.cm_writer = u.id "
+			+ "where b_no = :bNo "
+			+ "order by c.cm_grp, c.cm_seq", nativeQuery = true)
 	List<Comment> findByBNo(@Param("bNo") int bNo);
 	
 	
 	@Query(value = "select max(cm_grp) as grp from comment where b_no = :bNo", nativeQuery = true)
 	Integer getLastComment(int bNo);
+	
+	@Query(value = "select max(cm_seq) as grp from comment where b_no = :bNo and cm_grp = :cmGrp", nativeQuery = true)
+	Integer getLastCommentSeq(int bNo, int cmGrp);
 	
 }

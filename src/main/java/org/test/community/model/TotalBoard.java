@@ -19,7 +19,6 @@ import java.util.List;
 @Table(name = "total_board")
 @Getter
 @Setter
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class TotalBoard {

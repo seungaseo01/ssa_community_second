@@ -26,5 +26,13 @@ public class CommentService {
 		return res;
 		
 	}
+	
+	public Optional<Integer> getSeq(int bNo, int cmGrp) {
+		
+		Optional<Integer> res =  Optional.ofNullable(commentRepository.getLastCommentSeq(bNo, cmGrp));
+		
+		return Optional.of(res.get()+1);
+		
+	}
 
 }

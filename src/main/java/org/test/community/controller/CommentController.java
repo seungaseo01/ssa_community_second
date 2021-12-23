@@ -7,6 +7,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -89,7 +90,8 @@ public class CommentController {
 
 	
 	@GetMapping("/selectComment/{bNo}")
-	private String commentSelect(@PathVariable("bNo") int bNo, Model model) {
+	@ResponseBody 
+	private List<Comment> commentSelect(@PathVariable("bNo") int bNo, Model model) {
 
 		System.out.println("=============selectComment================");		
 
@@ -100,10 +102,11 @@ public class CommentController {
  		
  		System.out.println("===========comments============="+comments.toString());
 
- 		model.addAttribute("comments",comments);
- 		
+// 		model.addAttribute("comments",comments);
+// 		
 
-		return "board/comment";
+		return comments;
+//		return "board/comment";
 	}	
 	
 	
@@ -115,7 +118,7 @@ public class CommentController {
 	private int reCommentInsert(@RequestBody HashMap <String, Object> comment, Principal principal) {
 
 
-		System.out.println("=============commentInsert================");
+		System.out.println("=============reCommentInsert================");
     	String username = principal.getName();
     	 
     	System.out.println("=============username================"+username);  	 
@@ -129,12 +132,12 @@ public class CommentController {
  		Comment insertComment =  new Comment();
  		insertComment.setCmContent(comment.get("cmContent").toString());
  		
- 		Optional<Integer> grp = commentService.getgrp(Integer.parseInt(comment.get("bNo").toString()));
+ 		Optional<Integer> seq = commentService.getSeq(Integer.parseInt(comment.get("bNo").toString()),Integer.parseInt(comment.get("cmGrp").toString()));
  		
- 	 	insertComment.setCmGrp(grp.get()); 		
- 	 	insertComment.setCmSeq(1);
-
-
+ 		
+ 
+ 	 	insertComment.setCmGrp(Integer.parseInt(comment.get("cmGrp").toString())); 		
+ 	 	insertComment.setCmSeq(seq.get());
 
 		System.out.println("===========insertComment1============="+insertComment);
 		
@@ -159,5 +162,18 @@ public class CommentController {
 	}	
 
 	
+	
+	// 댓글 삭제
+	@DeleteMapping("deleteComment/{cmNo}")
+	@ResponseBody 
+	private int commentDelete(@PathVariable("cmNo") int cmNo) {
+
+		System.out.println("=============commentDelete================");		
+
+ 		System.out.println("============cmNo=============="+cmNo);
+    	 
+
+ 		return 0 ;
+	}	
 	
 }

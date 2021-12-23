@@ -14,10 +14,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.test.community.model.Category;
+import org.test.community.model.Comment;
 import org.test.community.model.TotalBoard;
 import org.test.community.model.User;
 import org.test.community.repository.BoardRepository;
 import org.test.community.repository.CategoryRepository;
+import org.test.community.repository.CommentRepository;
 import org.test.community.repository.LikesRepository;
 import org.test.community.repository.UserRepository;
 import org.test.community.service.LikesService;
@@ -26,6 +28,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.Principal;
+import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
@@ -48,6 +51,10 @@ public class BoardController {
     
     @Autowired
     LikesRepository likesRepository;
+    
+    @Autowired
+    CommentRepository commentRepository;
+    
     
 //    카테고리 생성
 
@@ -140,8 +147,8 @@ public class BoardController {
         System.out.println("=======likes========"+ likes);
         
         //댓글 조회
-        
-        
+        List<Comment> commentList = commentRepository.findByBNo(bNo);
+        model.addAttribute("commentList",commentList);
 
         //Optional 에서 값을 빼올려면 get()써줘야함
         return "board/selectByBNo";
@@ -209,7 +216,7 @@ public class BoardController {
      }
      
      
- //댓글
+ 
 
      
 

@@ -12,7 +12,7 @@
 
 <!-- 댓글 작성 -->
 
-        <div class="row">
+        <div class="row" sec:authorize="isAuthenticated()">
             <div class="value_col" id="cmWriter"><span sec:authentication="name"></span></div>
             <div class="value_col"><input type="text" name="cmContent" id="cmContent"></div>
             <div class="col-md-3"><button type="button" class="btn btn-success btn-lg" id = "comment_save_btn">작성</button></div>
@@ -22,14 +22,23 @@
 
 		<div class="row">
 			<table border="1">
-				<tr th:each="comments:${boardOne.comments}">
-					<td th:text="${comments.user.username}"></td>
-					<td th:text="${comments.cmContent}"></td>
-					<td th:if="${comments.cmSeq == 1}"><button th:id="${comments.cmGrp}" class="add_btn"  th:value="${comments.cmNo}">댓글</button>
-<!-- 					<td th:if="${comments.cmSeq == 1}"><button th:id="${comments.cmGrp}" class="add_btn" th:value="${comments.cmNo}">댓글</button> -->
-					</td>				
-					<td th:if="${comments.cmSeq != 1}"><button id="add_btn" th:class="${comments.cmGrp}" th:value="${comments}">댓글</button></td>				
-				</tr>			
+				<tr th:each="comments:${commentList}">				
+					<td class="comment_writer" th:if="${comments.cmSeq == 1}" th:text="${comments.user.username}"></td>
+					<td class="comment_writer" th:if="${comments.cmSeq != 1}"> <img src="/img/icons8-reply-arrow-48.png"> </td>
+
+					<td class="comment_content" th:if="${comments.cmSeq == 1}" colspan="2" th:text="${comments.cmContent}" ></td>
+					<td class="comment_content" th:if="${comments.cmSeq != 1}"  th:text="${comments.user.username}"></td>
+					<td class="comment_content" th:if="${comments.cmSeq != 1}"  th:text="${comments.cmContent}" ></td>
+					
+					
+					<td th:if="${comments.user.username == #authentication.name}">			
+						<button th:id="${comments.cmNo}" class="remove_btn">삭제</button>				
+					</td>	
+					<td>				
+						<button th:id="${comments.cmGrp}" th:if="${comments.cmSeq == 1}" sec:authorize="isAuthenticated()" class="add_btn">댓글</button>				
+					</td>							
+				</tr>	
+		
 			</table>		
 		</div>
 
