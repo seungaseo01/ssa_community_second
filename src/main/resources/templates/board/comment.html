@@ -31,8 +31,8 @@
 					<td class="comment_content" th:if="${comments.cmSeq != 1}"  th:text="${comments.cmContent}" ></td>
 					
 					
-					<td th:if="${comments.user.username == #authentication.name}">			
-						<button th:id="${comments.cmNo}" class="remove_btn">삭제</button>				
+					<td th:if="${comments.user.username == #authentication.name}">	
+						<button th:id="${comments.cmNo}" class="remove_btn" th:data-grp="${comments.cmGrp}">삭제</button>				
 					</td>	
 					<td>				
 						<button th:id="${comments.cmGrp}" th:if="${comments.cmSeq == 1}" sec:authorize="isAuthenticated()" class="add_btn">댓글</button>				

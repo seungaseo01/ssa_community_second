@@ -3,7 +3,6 @@ alert(bNo);
 
 
 //댓글 추가
-
 $(document).on('click', '#comment_save_btn', function () {
 
 	alert("aaaa");
@@ -86,7 +85,6 @@ function addReply(cmGrp){
 		         success:function(data){
 				 	alert("댓글등록 완료!");
 					alert(data);
-					comment_select(data);
 					location.href = "/board/select?bNo="+data;
 					
 				 },
@@ -100,49 +98,42 @@ function addReply(cmGrp){
 
 
 
-
-// 댓글확인 
-function comment_select(bNo){
-	
-		alert("comment_select");
-		alert("넘어온값 : "+bNo);
-		
-		// bNo = parseInt(bNo);
-		
-		$.ajax({
-         url : '/comment/selectComment/'+bNo,
-         method : 'Get',
-	     contentType:'application/json;charset=utf-8',
-	     dataType : 'json',         
-		 success:function(data){
-		 	alert("댓글조회 성공");
-			alert(data);
-			console.log(JSON.stringify(data))	
-		 },
-         error:function(request,status,error){
-            alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-            console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-         }
-      });	
-}
-
 // 댓글 삭제
 $(".remove_btn").on('click', function () {
-	alert("AAA");
-	
-	$("#cmContent_tr").hide();
+	alert("remove_btn");
+
 	
 	var cmNo = $(this).attr("id");
 	alert(cmNo);
+	
+		
+	var comment = new Object();
+	
+	// 게시글 번호
+	comment['bNo'] = bNo;
+
+	// 댓글cmNo
+	comment['cmNo'] = parseInt(cmNo);
+
+
+	alert(comment);
+	console.log(comment);
 
          var result = confirm('댓글을 정말 삭제하시겠습니까?');
          alert('result : ' + result);
          if(result){
+
+
             $.ajax({
-               url : '/comment/deleteComment/' + cmNo,
+               url : '/comment/deleteComment/',
                method : 'DELETE',
-               success:function(){
-                  user_list();
+			   contentType:'application/json;charset=utf-8',
+			   data: JSON.stringify(comment),
+               success:function(data){
+
+				alert('삭제 성공'+data);
+				location.href = "/board/select?bNo="+data;
+				
                },
                error:function(request,status,error){
                   alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);

@@ -56,9 +56,50 @@ public class ManageController {
     CommentRepository commentRepository;
     
     // 관리페이지 이동
+    @GetMapping("/index")
+    public String manageIndex() {
+
+        return "manage/index";
+    }
+    
+    // 회원 전체 리스트 
+    @GetMapping("/list")
+    public String getList(Model model,
+    		@PageableDefault Pageable pageable){
+    	int page = (pageable.getPageNumber()==0) ? 0 : (pageable.getPageNumber()-1);
+    	pageable = PageRequest.of(page, 15, Sort.by("id").descending());
+    	
+    	Page<User> list = userRepository.findAll(pageable);
+    	
+    	System.out.println("================list==============="+list.toString());
+    	model.addAttribute("list", list);
+    	
+    	return "manage/selectUserList";
+    }
+    
+    // 회원 상세 페이지
+    @GetMapping("/selectByID")
+    public String userSelectByID(@RequestParam("id") int id, Model model) {
+
+    	
+    	Optional<User> user = userRepository.findById(id);
+    	model.addAttribute("user",user.get());
+    	
+    	return "manage/selectById";
+    }
+
+    // 회원 삭제
+    @GetMapping("/delete")
+    public String userDelete(@RequestParam("id") int id){
+
+      userRepository.deleteById(id);
+
+      return "redirect:/manage/list";
+    }
+    
+    //회원 등급 수정
     
     
-   
 
 
 }

@@ -10,6 +10,10 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,9 +29,14 @@ public class User {
     private int id;
 
     private String username;
+    private String nickname;
     private String password;
     private String email;
     private String phone;
+    
+	@CreationTimestamp
+	private Timestamp regdate;
+	
     private Boolean enabled;
 
     @JsonIgnore

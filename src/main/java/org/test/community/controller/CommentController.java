@@ -164,16 +164,34 @@ public class CommentController {
 	
 	
 	// 댓글 삭제
-	@DeleteMapping("deleteComment/{cmNo}")
+	@DeleteMapping("/deleteComment")
 	@ResponseBody 
-	private int commentDelete(@PathVariable("cmNo") int cmNo) {
+	private int commentDelete(@RequestBody HashMap <String, Object> comment) {
 
 		System.out.println("=============commentDelete================");		
 
- 		System.out.println("============cmNo=============="+cmNo);
+ 		System.out.println("============comment=============="+comment);
     	 
-
- 		return 0 ;
+ 		int bNo = Integer.parseInt(comment.get("bNo").toString());
+ 		int cmNo = Integer.parseInt(comment.get("cmNo").toString());
+ 		int res = commentService.deleteComment(bNo, cmNo);
+ 		
+ 		
+ 		return res ;
 	}	
-	
+	/*
+	 * 
+	 * // 댓글 삭제
+	 * 
+	 * @DeleteMapping("deleteComment/{cmNo}")
+	 * 
+	 * @ResponseBody private int commentDelete(@PathVariable("cmNo") int cmNo) {
+	 * 
+	 * System.out.println("=============commentDelete================");
+	 * 
+	 * System.out.println("============cmNo=============="+cmNo);
+	 * 
+	 * 
+	 * return 0 ; }
+	 */	
 }
