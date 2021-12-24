@@ -23,5 +23,10 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 			+ "group by u.id ",nativeQuery = true)
 	List<User> manageUserList(Pageable pageable);
 	
+	@Transactional
+	@Modifying
+	@Query(value = "insert into user_role value(:id,2)", nativeQuery = true)
+	void getAuthorization(int id);
+	
 	
 }

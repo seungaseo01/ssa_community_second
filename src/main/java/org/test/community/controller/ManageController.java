@@ -98,7 +98,13 @@ public class ManageController {
     }
     
     //회원 등급 수정
-    
+    @GetMapping("/getAuthorization")
+    public String userRoleUpdate(@RequestParam("id") int id){
+
+    	System.out.println("=========userRoleUpdate========"+id);
+
+      return "manage/selectById"+id;
+    }
     
 
 
