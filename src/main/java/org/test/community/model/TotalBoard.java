@@ -41,8 +41,9 @@ public class TotalBoard {
     @Column(name = "b_content")
     private String bContent;
 
-    @Column(name = "b_writer")
-    private String bWriter;
+    @ManyToOne
+    @JoinColumn(name = "b_writer",referencedColumnName = "id")
+    private User user;
 
     @CreationTimestamp
     @Column(name = "b_regdate", updatable = false)
@@ -58,7 +59,6 @@ public class TotalBoard {
     @ManyToOne
     @JoinColumn(name = "c_no")
     private Category category;
-
 
     @OneToMany(mappedBy="board")
     private List<LikeTable> likes  = new ArrayList<>();

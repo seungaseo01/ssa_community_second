@@ -9,10 +9,12 @@
 </head>
 <body>
 
+마이페이지
+
 <div id="table_wrap">
-    <div id="product">
+    <div id="user">
         <div class="row">
-            <h2>회원정보 상세</h2>
+            <h2>마이페이지</h2>
         </div>
 
         <div class="row">
@@ -36,19 +38,20 @@
             <div class="key_col">회원 가입일</div>
             <div class="value_col">[[${user.regdate}]]</div>      
         </div>
+
         <div class="row">
-            <div class="key_col">등급</div>
-            <div id="user_role" class="value_col" th:if="${user.roles.size()==1}" th:text="${user.roles.get(0).getName()}"></div>
-        	<div id="user_role" class="value_col" th:if="${user.roles.size()!=1}" th:text="${user.roles.get(1).getName()}"></div> 	 
+            <div class="key_col">회원 등급</div>  
+            <div  class="value_col" th:if="${user.roles.size()==1}" th:text="${user.roles.get(0).getName()}"></div>
+            <div  class="value_col" th:if="${user.roles.size()!=1}" th:text="${user.roles.get(1).getName()}"></div>  
         </div>
-        
-        
-        <div class="row" id="getAuth">
-        	<div><button th:onclick="|location.href='/manage/getAuthorization?id=${user.id}'|">관리자 권한 부여</button></div>
-        </div>
+
 
  </div>      
-
+        
+        <div class="row" id="userControl">
+        	<div><button class="mod_user_btn" th:data-pw="${user.password}" th:data-id="${user.id}">정보수정</button></div>
+        	<div><button class="del_user_btn" th:data-pw="${user.password}" th:data-id="${user.id}">회원탈퇴</button></div>
+        </div>
 
     <button onclick="history.go(-1)">뒤로가기</button>
 
@@ -57,7 +60,7 @@
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-<script src="/js/manage/selectById.js"></script>
+<script src="/js/user/mypage.js"></script>
 
 </body>
 

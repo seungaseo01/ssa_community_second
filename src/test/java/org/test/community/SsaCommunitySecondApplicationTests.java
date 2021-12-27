@@ -21,22 +21,22 @@ class SsaCommunitySecondApplicationTests {
     @Test
     public void insertBoardTest(){
 
-        for(int i=0; i<100; i++){
-            TotalBoard board = new TotalBoard();
-            
-            Category category = new Category();
-
-            category.setCNo(1);
-            category.setCName("test");
-            
-            
-            board.setCategory(category);
-            board.setBDivide("");
-            board.setBTitle("Sample title"+i);
-            board.setBWriter("writer"+i);
-            board.setBContent("Sample content"+i);
-
-            boardRepository.save(board);
-        }
+//        for(int i=0; i<100; i++){
+//            TotalBoard board = new TotalBoard();
+//            
+//            Category category = new Category();
+//
+//            category.setCNo(1);
+//            category.setCName("test");
+//            
+//            
+//            board.setCategory(category);
+//            board.setBDivide("");
+//            board.setBTitle("Sample title"+i);
+//            board.setBWriter(i);
+//            board.setBContent("Sample content"+i);
+//
+//            boardRepository.save(board);
+//        }
 }
 }

@@ -25,7 +25,7 @@
         <td th:text="${list.bNo}"></td>
         <td th:text="${list.category.cName}"></td>
         <td><a th:href="@{/board/select?bNo=}+${list.bNo}">[[${list.bTitle}]]</a></td>
-        <td th:text="${list.bWriter}"></td>
+        <td th:text="${list.user.nickname}"></td>
         <td th:text="${list.bRegdate}"></td>
         <td th:text="${list.bViewcnt}"></td>
         <td th:text="${list.likes.size()}"></td>

@@ -28,14 +28,15 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
 
-@Controller
-@RequestMapping("/manage")
-public class ManageController {
+@RestController
+@RequestMapping("/user")
+public class UserController {
 
     @Autowired
     CategoryRepository categoryRepository;
@@ -55,57 +56,23 @@ public class ManageController {
     @Autowired
     CommentRepository commentRepository;
     
-    // 관리페이지 이동
-    @GetMapping("/index")
-    public String manageIndex() {
-    	
-    	System.out.println("========manageIndex===========");
-        return "manage/index";
-    }
+
     
-    // 회원 전체 리스트 
-    @GetMapping("/list")
-    public String getList(Model model,
-    		@PageableDefault Pageable pageable){
-    	int page = (pageable.getPageNumber()==0) ? 0 : (pageable.getPageNumber()-1);
-    	pageable = PageRequest.of(page, 15, Sort.by("id").descending());
-    	
-    	Page<User> list = userRepository.findAll(pageable);
-    	
-    	System.out.println("================list==============="+list.toString());
-    	model.addAttribute("list", list);
-    	
-    	return "manage/selectUserList";
-    }
     
-    // 회원 상세 페이지
-    @GetMapping("/selectByID")
-    public String userSelectByID(@RequestParam("id") int id, Model model) {
+    //회원정보 수정페이지 이동    
+    @GetMapping("/modForm")
+    public String goModMyInfo(Model model, Principal principal) {
+    	
+   	 System.out.println("===============goModMyInfo===============");
 
     	
-    	Optional<User> user = userRepository.findById(id);
-    	model.addAttribute("user",user.get());
-    	
-    	return "manage/selectById";
-    }
-
-    // 회원 삭제
-    @GetMapping("/delete")
-    public String userDelete(@RequestParam("id") int id){
-
-      userRepository.deleteById(id);
-
-      return "redirect:/manage/list";
-    }
-    
-    //회원 등급 수정
-    @GetMapping("/getAuthorization")
-    public String userRoleUpdate(@RequestParam("id") int id){
-
-    	System.out.println("=========userRoleUpdate========"+id);
-
-      return "manage/selectById"+id;
-    }
+//   	 model.addAttribute("user",user.get());
+//
+//   	 System.out.println("========res=========="+user.get());
+     
+   	 return "user/modForm";
+    }  
+   
     
 
 

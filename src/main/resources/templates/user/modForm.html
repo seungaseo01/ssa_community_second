@@ -1,0 +1,286 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+<meta charset="UTF-8">
+<title>회원 정보 수정</title>
+
+    <!-- css -->
+    <link rel="stylesheet" href="/css/member/register.css">
+
+</head>
+<body>
+	
+    <div class="content">
+	    <form th:action="@{/user/updateInfo}" method="post" class="modForm" onsubmit="return false;">
+	    
+	    	<!-- 아이디 -->
+	    	<div class="usernameDiv">
+	    		<label>아이디</label>
+	    		<div class="description">영문 또는 영문+숫자로 구성된 5~12자의 아이디를 입력해주세요.</div>
+	    		<input name="username" class="username" placeholder="아이디" autocomplete="off" maxlength="12" th:value="${user.username}" readonly="readonly">
+	    		<div class="messageArea"></div>
+	    	</div>
+	    	
+	    	<!-- 비밀번호 -->
+	    	<div class="passwordDiv">
+	    		<label>비밀번호</label>
+	    		<div class="description">영문, 숫자, 특수문자를 포함한 8자 이상의 비밀번호를 입력해주세요.</div>
+	    		<input name="password" type="password" class="password" placeholder="비밀번호" maxlength="16" th:value="${user.password}">
+	    		<div class="messageArea"></div>
+	    	</div>
+	    	
+	    	<!-- 비밀번호 확인 -->
+	    	<div class="password2Div">
+	    		<label>비밀번호 확인</label>
+	    		<input type="password" class="password2" placeholder="비밀번호 확인" maxlength="16">
+	    		<div class="messageArea"></div>
+	    	</div>
+	    	
+	    	<!-- 닉네임 -->
+	    	<div class="nicknameDiv">
+	    		<label>닉네임</label>
+	    		<div class="description">다른 유저와 겹치지 않는 닉네임을 입력해주세요. (2~10자)</div>
+	    		<input name="nickname" class="nickname" placeholder="닉네임 (2~10자)" autocomplete="off" maxlength="10" th:value="${user.nickname}">
+	    		<div class="messageArea"></div>
+	    	</div>
+	    	
+	    	<!-- 이메일 -->
+	    	<div class="emailDiv">
+	    		<label>이메일</label>
+	    		<input name="email" class="email" placeholder="이메일" autocomplete="off" th:value="${user.email}" readonly="readonly">
+	    	</div>
+
+	    	
+	    	
+	    	<button class="submitBtn">수정하기</button>
+	    
+	    </form>	
+	    
+	  
+	</div>
+	
+	
+<script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+	
+</body>
+
+<script>
+
+	
+	// 유효성 검사 통과 유무 변수
+	let passwordCheck = false;      // 비밀번호
+	let password2Check = false;     // 비밀번호 확인
+	let passwordMatchCheck = false; // 비밀번호 일치 여부
+	let nicknameCheck = false;      // 닉네임
+	let nicknameDupCheck = false;   // 닉네임 중복 검사
+
+
+	/* 유효성 검사 후 출력 메세지 */
+	// 필수 입력 항목
+	let requiredField = "<div class='errorMsg requiredField'>필수 입력 항목입니다.</div>";
+	
+	// 공백 입력 시
+	let spaceError = "<div class='errorMsg spaceError'>공백은 사용할 수 없습니다.</div>";
+
+	// password
+	let passwordError1 = "<div class='errorMsg passwordError1'>비밀번호는 영문, 숫자, 특수문자를 포함하여 8자 이상이어야 합니다.</div>";
+	let passwordError2 = "<div class='errorMsg passwordError2'>비밀번호가 일치하지 않습니다.</div>";
+		
+	// nickname
+	let nicknameCorrect = "<div class='correctMsg nicknameCorrect'>사용 가능한 닉네임입니다.</div>";
+	let nicknameError1 = "<div class='errorMsg nicknameError1'>2자 이상 입력해주세요.</div>";
+	let nicknameError2 = "<div class='errorMsg nicknameError2'>닉네임이 이미 존재합니다.</div>";
+
+
+	
+	$(document).ready(function(){
+		
+		
+		$(".submitBtn").on("click", function(){
+			
+			alert('passwordCheck=' + passwordCheck
+					 + ', password2Check=' + password2Check
+					 + ', passwordMatchCheck=' + passwordMatchCheck
+					 + ', nicknameDupCheck=' + nicknameDupCheck
+					 );
+			
+			// 최종 유효성 검사(모든 check 값들이 true일 경우)
+            if ( passwordCheck && password2Check && passwordMatchCheck 
+            	&& nicknameCheck && nicknameDupCheck) {
+                
+            	if (confirm("해당정보로 회원정보를 수정하시겠습니까?")) {
+                    alert("회원가입이 완료되었습니다.");
+                    $(".modForm").attr("onsubmit", "return true;");
+                    $(".modForm").attr("action", "/user/updateInfo");
+                    $(".modForm").submit();
+                } else {
+                    alert("취소되었습니다.");
+                }
+                
+            }else{
+            	 return false;
+            }
+			
+			
+		});
+		
+	
+		// 비밀번호 유효성 검사
+	    $(".password").on("propertychange change keyup paste input", function(){
+	    	var password = $(this).val();
+	    	var password2 = $(".password2").val();
+	    	
+	    	if(passwordPatternCheck(password) && !spaceCheck(password)){ // 비밀번호가 8~16자이고 영+숫+특문일 경우
+	    		$(".passwordDiv .messageArea").html(""); // 에러 메세지 제거
+				passwordCheck = true;
+	    		
+				if(password == password2){ // 비밀번호와 비밀번호 확인이 일치할 경우
+		    		$(".password2Div .messageArea").html(""); // 에러 메세지 제거
+		    		passwordMatchCheck = true;
+		    		
+		    	}else{
+		    		$(".password2Div .messageArea").html(passwordError2);
+		    		passwordMatchCheck = false;
+		    	}
+	    		
+	    	}else{
+	    		
+	    		if(spaceCheck(password)){ // 공백이 존재할 경우
+		    		$(".passwordDiv .messageArea").html(spaceError);
+	    		
+	    		}else if(password.length == 0){ // 아무 것도 입력하지 않았을 경우
+	    			$(".passwordDiv .messageArea").html(requiredField);
+	    		
+	    		}else{
+		    		$(".passwordDiv .messageArea").html(passwordError1);
+	    		}
+	    		passwordCheck = false;
+	    		passwordMatchCheck = false;
+	    	}
+	    	
+	    });
+		
+		// 비밀번호 확인 유효성 검사
+		$(".password2").on("propertychange change keyup paste input", function(){
+			var password = $(".password").val();
+	    	var password2 = $(this).val();
+	    	
+	    	// 비밀번호 입력 조건을 충족하고 비밀번호와 비밀번호 확인이 일치할 경우
+	    	if(password == password2 && passwordPatternCheck(password2) && !spaceCheck(password2)){
+	    		
+	    		$(".password2Div .messageArea").html(""); // 에러 메세지 제거
+	    		password2Check = true;
+	    		passwordMatchCheck = true;
+		    		
+	    		
+	    	}else{
+	    		
+	    		if(password != password2){ // 비밀번호와 비밀번호 확인이 일치하지 않을 경우
+	    			$(".password2Div .messageArea").html(passwordError2);
+	    			password2Check = true;
+		    		passwordMatchCheck = false;
+		    		
+		    	}else{ // 비밀번호 확인이 일치하지만 입력 조건 충족 안됐을 경우
+		    		$(".password2Div .messageArea").html(""); // 에러 메세지 제거
+		    		password2Check = false;
+		    		passwordMatchCheck = true;
+		    	}
+	    		
+	    	}
+	    	
+		});
+		
+		
+	 	// 닉네임 중복 검사
+	    $(".nickname").on("propertychange change keyup paste input", function(){
+	    	var nickname = $(this).val();
+	    	var data = {
+	    			nickname : nickname
+	    	}
+	    	
+	    	if(nickname.length > 1 && nickname.length < 11 && !spaceCheck(nickname)){  // 닉네임에 공백이 없고 2~10자일 때
+	    		
+    			nicknameCheck = true;
+    			
+    			$.ajax({
+    				url: "/account/register/nicknameCheck",
+    				type: "POST",
+    				data: data,
+    				success: function(result) {
+    					
+    					if(result != "exist") {
+    						$(".nicknameDiv .messageArea").html(nicknameCorrect);
+    						nicknameDupCheck = true;
+    						return;
+    						
+    					}else{
+    						$(".nicknameDiv .messageArea").html(nicknameError2);
+    						nicknameDupCheck = false;
+    						return;
+    					}
+    				}
+    			});
+	    			
+	    	
+	    	}else{
+	    		
+	    		if(spaceCheck(nickname)){ // 공백이 존재할 경우
+	    			$(".nicknameDiv .messageArea").html(spaceError);
+	    		
+	    		}else if(nickname.length == 0){ // 아무 것도 입력하지 않았을 경우
+	    			$(".nicknameDiv .messageArea").html(requiredField);
+	    		
+	    		}else{ // 아이디가 2자 미만일 경우
+	    			$(".nicknameDiv .messageArea").html(nicknameError1);
+	    		
+	    		}
+	    		nicknameCheck = false;
+	    		nicknameDupCheck = false;
+	    	}
+	    	
+	    });
+		
+		// 공백 검사(공백이 존재하면 true)
+		function spaceCheck(str) { 
+			if(str.search(/\s/) != -1) { 
+				return true; 
+			} else { 
+				return false; 
+			} 
+		}
+		
+		// 비밀번호 패턴 체크(영문, 숫자, 특수문자 포함여부 체크, true일 경우 사용가능한 비밀번호)
+     	function passwordPatternCheck(str) { 
+     		var pattern1 = /[0-9]/; // 숫자 
+     		var pattern2 = /[a-zA-Z]/; // 영문
+     		var pattern3 = /[~!@#$%^&*()_+|<>?:{}]/; // 특수문자 
+     		
+     		if(!pattern1.test(str) || !pattern2.test(str) || !pattern3.test(str) || str.length < 8 || str.length > 16) { 
+     			return false;
+     		} else { 
+     			return true; 
+     		} 
+     	}
+		
+     	// 닉네임 입력 시 특수문자 입력 불가
+        $('.nickname').on("propertychange change keyup paste input", function(){
+            var re = /[ \{\}\[\]\/?.,;:|\)*~`!^\-+┼<>@\#$%&\'\"\\\(\=]/gi;
+            var temp = $(this).val();
+            
+            if (re.test(temp)) { // 특수문자가 포함되면 삭제하고 특수문자 입력 전 값으로 다시 셋팅
+                $(this).val(temp.replace(re, ""));
+            }
+        });
+	
+	
+	
+		
+	
+	});
+
+
+</script>
+</body>
+
+</html>

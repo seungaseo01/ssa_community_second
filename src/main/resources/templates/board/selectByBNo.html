@@ -25,7 +25,7 @@
 
     <div class="row board_info">
 
-            <div> 작성자 : [[${boardOne.bWriter}]]</div>
+            <div> 작성자 : [[${boardOne.user.nickname}]]</div>
 
             <div> 작성일 : [[${boardOne.bRegdate}]]</div>
 
@@ -45,8 +45,15 @@
 
     <div class="row">
         <div><button id="likeBtn">좋아요</button></div>
-        <div><button th:onclick="|location.href='/board/update?bNo=${boardOne.bNo}'|">수정하기</button></div>
-        <div><a th:href="@{/board/delete?bNo=}+${boardOne.bNo}">삭제하기</a></div>
+        
+        <div th:if="${boardOne.user.username == #authentication.name}">
+        	<button th:onclick="|location.href='/board/update?bNo=${boardOne.bNo}'|">수정하기</button>
+       	</div>
+       	
+        <div th:if="${boardOne.user.username == #authentication.name} or ${ #authentication.expression('hasRole(''ROLE_ADMIN'')') ? true : false}">
+        	<a th:href="@{/board/delete?bNo=}+${boardOne.bNo}">삭제하기</a>
+       	</div>
+       	
     </div>
 
 

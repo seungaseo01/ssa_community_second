@@ -10,6 +10,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -28,11 +29,16 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
+	@Size(min = 4, max = 16, message = "아이디는 4~12자리로 입력해야 합니다.")
     private String username;
+	
     private String nickname;
+    
+    @Size(min = 4, message = "비밀번호를 4자 이상 입력해주세요.")
     private String password;
+    
     private String email;
-    private String phone;
+    
     
 	@CreationTimestamp
 	private Timestamp regdate;
@@ -52,6 +58,13 @@ public class User {
     
     @OneToMany(mappedBy="user")
     private List<Comment> comments  = new ArrayList<>();
+
+    @OneToMany(mappedBy="user")
+    private List<TotalBoard> boards  = new ArrayList<>();
+    
+    
+    
+    
 
 
 }

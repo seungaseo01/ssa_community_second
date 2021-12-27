@@ -100,10 +100,21 @@ public class BoardController {
 // 게시물 생성
     @PostMapping("/regBoard")
     @ResponseBody
-    public String regBoard(TotalBoard board){
+    public String regBoard(TotalBoard board,Principal principal){
         System.out.println("==============category==============="+board);
 
-        boardRepository.save(board);
+   	 String username = principal.getName();
+	 
+
+   	 System.out.println("=============username================"+username);  	 
+   	 int id =  userRepository.selectId(username); 
+   	 
+   	 User user = new User();
+   	 user.setId(id);
+   	 
+   	 board.setUser(user);
+        
+     boardRepository.save(board);
 
         String test = "Success";
         return test;
@@ -171,13 +182,23 @@ public class BoardController {
 
 // 게시물 수정
     @PostMapping("/updateBoard")
-    public String boardUpdate(TotalBoard totalBoard){
+    public String boardUpdate(TotalBoard board,Principal principal){
 
         System.out.println("===========boardUpdate===========");
 
-        boardRepository.save(totalBoard);
+	  	 String username = principal.getName();
+		 
+	
+	   	 System.out.println("=============username================"+username);  	 
+	   	 int id =  userRepository.selectId(username); 
+	   	 
+	   	 User user = new User();
+	   	 user.setId(id);
+	   	 
+	   	board.setUser(user);
+        boardRepository.save(board);
 
-        int bNo = totalBoard.getBNo();
+        int bNo = board.getBNo();
 
         return "redirect:/board/select?bNo="+bNo;
     }
